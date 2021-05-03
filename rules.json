@@ -1,49 +1,73 @@
 [
-  {
-    "replaceSummary": "个人喜好规则-小女子/我",
-    "enable": true,
-    "isRegex": false,
-    "regex": "小女子",
-    "replacement": "我",
-    "useTo": ""
-  },
-  {
-    "replaceSummary": "个人喜好规则-东国/和之国",
-    "enable": true,
-    "isRegex": false,
-    "regex": "东国",
-    "replacement": "和之国",
-    "useTo": ""
-  },
-  {
-    "replaceSummary": "个人喜好规则-冒险家/冒险者",
-    "enable": true,
-    "isRegex": false,
-    "regex": "冒险家",
-
-    "replacement": "冒险者",
-    "useTo": ""
-  },
-  {
-    "replaceSummary": "个人喜好规则-女帝/女王",
-    "enable": true,
-    "isRegex": false,
-    "regex": "女帝",
-    "replacement": "女王",
-    "useTo": ""
-  },
-  {
-    "replaceSummary": "去广告规则1",
-    "enable": true,
-    "isRegex": false,
-    "regex": "（笔趣谷无弹窗）提供高速文字无弹窗的小说，让你阅读更清爽，请记住我们的网址。",
-    "replacement": "",
-    "useTo": ""
-  },
     {
-    "enable": true,
-    "isRegex": false,
-    "regex": "王**",
-    "replacement": "王国军"
-  }
+        "replaceSummary": "个人喜好规则-小女子/我",
+        "enable": true,
+        "isRegex": false,
+        "regex": "小女子",
+        "replacement": "我",
+        "useTo": "",
+        "name": "个人喜好规则-小女子/我",
+        "pattern": "小女子",
+        "isEnabled": true
+    },
+    {
+        "replaceSummary": "个人喜好规则-东国/和之国",
+        "enable": true,
+        "isRegex": false,
+        "regex": "东国",
+        "replacement": "和之国",
+        "useTo": "",
+        "name": "个人喜好规则-东国/和之国",
+        "pattern": "东国",
+        "isEnabled": true
+    },
+    {
+        "replaceSummary": "个人喜好规则-冒险家/冒险者",
+        "enable": true,
+        "isRegex": false,
+        "regex": "冒险家",
+        "replacement": "冒险者",
+        "useTo": "",
+        "name": "个人喜好规则-冒险家/冒险者",
+        "pattern": "冒险家",
+        "isEnabled": true
+    },
+    {
+        "replaceSummary": "个人喜好规则-女帝/女王",
+        "enable": true,
+        "isRegex": false,
+        "regex": "女帝",
+        "replacement": "女王",
+        "useTo": "",
+        "name": "个人喜好规则-女帝/女王",
+        "pattern": "女帝",
+        "isEnabled": true
+    },
+    {
+        "replaceSummary": "去广告规则1",
+        "enable": true,
+        "isRegex": false,
+        "regex": "（笔趣谷无弹窗）提供高速文字无弹窗的小说，让你阅读更清爽，请记住我们的网址。",
+        "replacement": "",
+        "useTo": "",
+        "name": "去广告规则1",
+        "pattern": "（笔趣谷无弹窗）提供高速文字无弹窗的小说，让你阅读更清爽，请记住我们的网址。",
+        "isEnabled": true
+    },
+    {
+        "enable": true,
+        "isRegex": false,
+        "regex": "王**",
+        "replacement": "王国军",
+        "name": "王** to 王国军",
+        "pattern": "王**",
+        "isEnabled": true
+    },
+    {
+        "pattern": "更加**了",
+        "replacement": "更加兴奋了",
+        "isRegex": false,
+        "name": "更加**了 to 更加兴奋了",
+        "isEnabled": true
+    }
 ]

@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QFileDialog, QMe
 from ebooklib import epub
 import ebooklib
 from lxml import etree
+import os
 from MainWindow import *
 from autoreplace import AutoReplace
 
@@ -97,6 +98,9 @@ class MainWindow(QMainWindow):
         self.current_chapter = None
         self.chapter_elements.clear()
         self.current_element_index = 0
+
+        # change title
+        self.setWindowTitle(f'EpubFixCensorship - {os.path.basename(self.file_name)}')
 
         # load new book
         self.chapters = list(self.book.get_items_of_type(ebooklib.ITEM_DOCUMENT))
