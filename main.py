@@ -9,6 +9,8 @@ import ebooklib
 from lxml import etree
 import os
 from MainWindow import *
+from setting import SettingWindow
+from config import init_config,PROGRAM_PATH
 from autoreplace import AutoReplace
 
 VERSION = (0, 1, 0)
@@ -31,16 +33,23 @@ class MainWindow(QMainWindow):
         self.auto_replacements:List[Tuple[str,str]]=[]
 
         try :
-            with open ('rules.json') as f:
+            with open (f'{PROGRAM_PATH}/rules.json') as f:
                 self.rules:List[dict] = json.load(f)
         except FileNotFoundError:
             self.rules:List[dict] = []
 
         try :
-            with open ('replace_history.json') as f:
+            with open (f'{PROGRAM_PATH}/replace_history.json') as f:
                 self.replace_history:Dict[str,str] = json.load(f)
         except FileNotFoundError:
             self.replace_history:Dict[str,str]={}
+
+        try :
+            with open (f'{PROGRAM_PATH}/config.json') as f:
+                self.config:dict = json.load(f)
+        except FileNotFoundError:
+            self.config:dict={}
+        init_config(self.config)
 
         self.replacer = AutoReplace(rules=self.rules,replace_histories=self.replace_history)
 
@@ -55,6 +64,8 @@ class MainWindow(QMainWindow):
         self.ui.actionAbout.triggered.connect(self.show_about_window)
         self.ui.actionAbout_Qt.triggered.connect(self.show_about_qt)
 
+        self.ui.actionSetting.triggered.connect(self.show_setting_window)
+
         self.ui.next_button.clicked.connect(self.next_element)
         self.ui.last_button.clicked.connect(self.last_element)
         self.ui.add_new_rule.clicked.connect(self.button_add_new_rule_clicked)
@@ -66,10 +77,10 @@ class MainWindow(QMainWindow):
         if self.book is not None:
             self.ask_will_save()
 
-        with open ('rules.json','w') as f:
+        with open (f'{PROGRAM_PATH}/rules.json','w') as f:
             json.dump(self.rules,f,indent=4,ensure_ascii=False)
 
-        with open ('replace_history.json','w') as f:
+        with open (f'{PROGRAM_PATH}/replace_history.json','w') as f:
             json.dump(self.replace_history,f,indent=4,ensure_ascii=False)
 
         app.exit()
@@ -208,7 +219,7 @@ class MainWindow(QMainWindow):
             self.current_chapter_index -= 1
             self.current_chapter: etree._Element = etree.HTML(
                 self.chapters[self.current_chapter_index].content)
-            self.chapter_elements = self.filter_element(self.current_chapter.cssselect('p,div'))
+            self.chapter_elements = self.filter_element(self.current_chapter.cssselect(','.join(self.config['element_tags'])))
             if self.chapter_elements == []:
                 return self.last_chapter()
             self.current_element_index = len(self.chapter_elements)-1
@@ -226,7 +237,7 @@ class MainWindow(QMainWindow):
             self.current_chapter_index += 1
             self.current_chapter: etree._Element = etree.HTML(
                 self.chapters[self.current_chapter_index].content)
-            self.chapter_elements = self.filter_element(self.current_chapter.cssselect('p,div'))
+            self.chapter_elements = self.filter_element(self.current_chapter.cssselect(','.join(self.config['element_tags'])))
             if self.chapter_elements == []:
                 return self.next_chapter()
             self.current_element_index = 0
@@ -235,12 +246,26 @@ class MainWindow(QMainWindow):
 
     def filter_element(self,elements:List[etree._Element])->List[etree._Element]:
         r:List[etree._Element] = []
+        checked_string = self.config['element_strings']
         for element in elements:
             if element.text is None:
                 continue
-            elif '*' not in element.get('censored_text',element.text):
+
+            if element.get('censored_text') is not None:
+                r.append(element)
                 continue
-            r.append(element)
+
+            for char in self.config['element_strings']:
+                if char in element.get('censored_text',element.text):
+                    r.append(element)
+                    continue
+
+            if self.config['check_element_by_rules']:
+                replaced_texts = self.replacer.replace_text(element.text)
+                if len(replaced_texts) > 1:
+                    r.append(element)
+                    continue
+
         return r
 
     def save_current_chapter(self):
@@ -265,6 +290,15 @@ class MainWindow(QMainWindow):
     def listwidget_item_double_clicked(self,item:QListWidgetItem):
         index = self.ui.auto_fix_list.indexFromItem(item)
         self.ui.fixed_text.setPlainText(self.auto_replacements[index.row()][1])
+
+    def show_setting_window(self):
+        try :
+            self.setting_window.close()
+        except:
+            pass
+        self.setting_window = SettingWindow(config=self.config,parent=self)
+        self.setting_window.show()
+
 
 
 def main() -> int:
