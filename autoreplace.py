@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 from lxml import etree
 
@@ -9,11 +9,17 @@ except ImportError:
 
 
 class AutoReplace:
-    def __init__(self, *, rules: List[dict] = [], ):
+    def __init__(self, *, rules: List[dict] = [], replace_histories:Dict[str,str] = {}):
         self.rules = rules
+        self.replace_histories = replace_histories
 
     def replace_text(self, text) -> List[Tuple[str, str]]:
         r = [('origin', text)]
+
+        new_text = self.replace_histories.get(text)
+        if new_text is not None:
+            r.append(('history',new_text))
+
         for replace_rule in self.rules:
             replace_rule['name'] = replace_rule.get('name', replace_rule.get('replaceSummary', ''))
             replace_rule['pattern'] = replace_rule.get('pattern', replace_rule.get('regex'))

@@ -1,6 +1,6 @@
 import json
 import sys
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Dict
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QFileDialog, QMessageBox, QProgressDialog, \
     QListWidgetItem
@@ -31,11 +31,17 @@ class MainWindow(QMainWindow):
 
         try :
             with open ('rules.json') as f:
-                self.rules = json.load(f)
+                self.rules:List[dict] = json.load(f)
         except FileNotFoundError:
-            self.rules = []
+            self.rules:List[dict] = []
 
-        self.replacer = AutoReplace(rules=self.rules)
+        try :
+            with open ('replace_history.json') as f:
+                self.replace_history:Dict[str,str] = json.load(f)
+        except FileNotFoundError:
+            self.replace_history:Dict[str,str]={}
+
+        self.replacer = AutoReplace(rules=self.rules,replace_histories=self.replace_history)
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -57,6 +63,13 @@ class MainWindow(QMainWindow):
     def closeEvent(self, QCloseEvent):
         if self.book is not None:
             self.ask_will_save()
+
+        with open ('rules','w') as f:
+            json.dump(self.rules,f,indent=4)
+
+        with open ('replace_history.json','w') as f:
+            json.dump(self.replace_history,f,indent=4)
+
         app.exit()
 
     def open_book_dialog_box(self):
@@ -150,6 +163,7 @@ class MainWindow(QMainWindow):
             if current_element.get('censored_text') is None:
                 current_element.set('censored_text',current_element.text)
             current_element.text = self.ui.fixed_text.toPlainText()
+            self.replace_history[current_element.get('censored_text')] = current_element.text
         except IndexError:
             pass
 

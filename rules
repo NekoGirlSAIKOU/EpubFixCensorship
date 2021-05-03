@@ -1,0 +1,66 @@
+[
+    {
+        "replaceSummary": "\u4e2a\u4eba\u559c\u597d\u89c4\u5219-\u5c0f\u5973\u5b50/\u6211",
+        "enable": true,
+        "isRegex": false,
+        "regex": "\u5c0f\u5973\u5b50",
+        "replacement": "\u6211",
+        "useTo": "",
+        "name": "\u4e2a\u4eba\u559c\u597d\u89c4\u5219-\u5c0f\u5973\u5b50/\u6211",
+        "pattern": "\u5c0f\u5973\u5b50",
+        "isEnabled": true
+    },
+    {
+        "replaceSummary": "\u4e2a\u4eba\u559c\u597d\u89c4\u5219-\u4e1c\u56fd/\u548c\u4e4b\u56fd",
+        "enable": true,
+        "isRegex": false,
+        "regex": "\u4e1c\u56fd",
+        "replacement": "\u548c\u4e4b\u56fd",
+        "useTo": "",
+        "name": "\u4e2a\u4eba\u559c\u597d\u89c4\u5219-\u4e1c\u56fd/\u548c\u4e4b\u56fd",
+        "pattern": "\u4e1c\u56fd",
+        "isEnabled": true
+    },
+    {
+        "replaceSummary": "\u4e2a\u4eba\u559c\u597d\u89c4\u5219-\u5192\u9669\u5bb6/\u5192\u9669\u8005",
+        "enable": true,
+        "isRegex": false,
+        "regex": "\u5192\u9669\u5bb6",
+        "replacement": "\u5192\u9669\u8005",
+        "useTo": "",
+        "name": "\u4e2a\u4eba\u559c\u597d\u89c4\u5219-\u5192\u9669\u5bb6/\u5192\u9669\u8005",
+        "pattern": "\u5192\u9669\u5bb6",
+        "isEnabled": true
+    },
+    {
+        "replaceSummary": "\u4e2a\u4eba\u559c\u597d\u89c4\u5219-\u5973\u5e1d/\u5973\u738b",
+        "enable": true,
+        "isRegex": false,
+        "regex": "\u5973\u5e1d",
+        "replacement": "\u5973\u738b",
+        "useTo": "",
+        "name": "\u4e2a\u4eba\u559c\u597d\u89c4\u5219-\u5973\u5e1d/\u5973\u738b",
+        "pattern": "\u5973\u5e1d",
+        "isEnabled": true
+    },
+    {
+        "replaceSummary": "\u53bb\u5e7f\u544a\u89c4\u52191",
+        "enable": true,
+        "isRegex": false,
+        "regex": "\uff08\u7b14\u8da3\u8c37\u65e0\u5f39\u7a97\uff09\u63d0\u4f9b\u9ad8\u901f\u6587\u5b57\u65e0\u5f39\u7a97\u7684\u5c0f\u8bf4\uff0c\u8ba9\u4f60\u9605\u8bfb\u66f4\u6e05\u723d\uff0c\u8bf7\u8bb0\u4f4f\u6211\u4eec\u7684\u7f51\u5740\u3002",
+        "replacement": "",
+        "useTo": "",
+        "name": "\u53bb\u5e7f\u544a\u89c4\u52191",
+        "pattern": "\uff08\u7b14\u8da3\u8c37\u65e0\u5f39\u7a97\uff09\u63d0\u4f9b\u9ad8\u901f\u6587\u5b57\u65e0\u5f39\u7a97\u7684\u5c0f\u8bf4\uff0c\u8ba9\u4f60\u9605\u8bfb\u66f4\u6e05\u723d\uff0c\u8bf7\u8bb0\u4f4f\u6211\u4eec\u7684\u7f51\u5740\u3002",
+        "isEnabled": true
+    },
+    {
+        "enable": true,
+        "isRegex": false,
+        "regex": "\u738b**",
+        "replacement": "\u738b\u56fd\u519b",
+        "name": "\u738b** to \u738b\u56fd\u519b",
+        "pattern": "\u738b**",
+        "isEnabled": true
+    }
+]
