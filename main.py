@@ -171,7 +171,10 @@ class MainWindow(QMainWindow):
             pass
 
     def show_element(self,original_text = None):
-        current_element = self.chapter_elements[self.current_element_index]
+        try :
+            current_element = self.chapter_elements[self.current_element_index]
+        except:
+            return
         if original_text is None:
             original_text = current_element.get("censored_text",current_element.text)
 
