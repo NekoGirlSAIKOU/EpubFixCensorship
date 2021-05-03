@@ -250,6 +250,7 @@ class MainWindow(QMainWindow):
             'replacement':self.ui.new_rule_replacement.text(),
             'isRegex':self.ui.is_regex_rule.isChecked()
         }
+        rule['name'] = f'{rule["pattern"]} to {rule["replacement"]}'
         self.ui.new_rule_pattern.setText('')
         self.ui.new_rule_replacement.setText('')
         self.rules.append(rule)
