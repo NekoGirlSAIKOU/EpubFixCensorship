@@ -56,6 +56,7 @@ class MainWindow(QMainWindow):
 
         self.ui.next_button.clicked.connect(self.next_element)
         self.ui.last_button.clicked.connect(self.last_element)
+        self.ui.add_new_rule.clicked.connect(self.button_add_new_rule_clicked)
 
         self.ui.reapply_button.clicked.connect(self.button_reapply_clicked)
         self.ui.auto_fix_list.itemDoubleClicked.connect(self.listwidget_item_double_clicked)
@@ -234,6 +235,16 @@ class MainWindow(QMainWindow):
     def button_reapply_clicked(self):
         self.save_current_element()
         self.show_element(original_text=self.ui.fixed_text.toPlainText())
+
+    def button_add_new_rule_clicked(self):
+        rule = {
+            'pattern':self.ui.new_rule_pattern.text(),
+            'replacement':self.ui.new_rule_replacement.text(),
+            'isRegex':self.ui.is_regex_rule.isChecked()
+        }
+        self.ui.new_rule_pattern.setText('')
+        self.ui.new_rule_replacement.setText('')
+        self.rules.append(rule)
 
     def listwidget_item_double_clicked(self,item:QListWidgetItem):
         index = self.ui.auto_fix_list.indexFromItem(item)
