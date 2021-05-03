@@ -184,6 +184,10 @@ class MainWindow(QMainWindow):
             self.ui.fixed_text.setPlainText(current_element.text)
         for replacement in self.auto_replacements:
             self.ui.auto_fix_list.addItem(replacement[0])
+        try :
+            self.ui.chapter_title.setText(self.current_chapter.xpath('/html/head/title//text()')[0])
+        except IndexError:
+            self.ui.chapter_title.setText('')
 
     def last_chapter(self):
         self.save_current_chapter()
@@ -223,7 +227,9 @@ class MainWindow(QMainWindow):
     def filter_element(self,elements:List[etree._Element])->List[etree._Element]:
         r:List[etree._Element] = []
         for element in elements:
-            if '*' not in element.get('censored_text',element.text):
+            if element.text is None:
+                continue
+            elif '*' not in element.get('censored_text',element.text):
                 continue
             r.append(element)
         return r
