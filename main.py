@@ -65,7 +65,7 @@ class MainWindow(QMainWindow):
         if self.book is not None:
             self.ask_will_save()
 
-        with open ('rules','w') as f:
+        with open ('rules.json','w') as f:
             json.dump(self.rules,f,indent=4)
 
         with open ('replace_history.json','w') as f:
