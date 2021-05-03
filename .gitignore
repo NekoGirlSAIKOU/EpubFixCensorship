@@ -3,3 +3,4 @@ venv
 MainWindow.py
 config.json
 __pycache__
+replace_history.json
