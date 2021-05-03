@@ -66,10 +66,10 @@ class MainWindow(QMainWindow):
             self.ask_will_save()
 
         with open ('rules.json','w') as f:
-            json.dump(self.rules,f,indent=4)
+            json.dump(self.rules,f,indent=4,ensure_ascii=False)
 
         with open ('replace_history.json','w') as f:
-            json.dump(self.replace_history,f,indent=4)
+            json.dump(self.replace_history,f,indent=4,ensure_ascii=False)
 
         app.exit()
 
