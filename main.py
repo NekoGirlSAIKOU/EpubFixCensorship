@@ -164,7 +164,9 @@ class MainWindow(QMainWindow):
             if current_element.get('censored_text') is None:
                 current_element.set('censored_text',current_element.text)
             current_element.text = self.ui.fixed_text.toPlainText()
-            self.replace_history[current_element.get('censored_text')] = current_element.text
+
+            if current_element.text != current_element.get('censored_text'):
+                self.replace_history[current_element.get('censored_text')] = current_element.text
         except IndexError:
             pass
 
