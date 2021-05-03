@@ -26,6 +26,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="reapply_button">
+         <property name="toolTip">
+          <string>Use this when there are multi *</string>
+         </property>
          <property name="text">
           <string>Reapply</string>
          </property>
