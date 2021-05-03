@@ -1,0 +1,5 @@
+*.epub
+venv
+MainWindow.py
+config.json
+__pycache__

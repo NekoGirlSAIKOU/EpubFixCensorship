@@ -1,0 +1,49 @@
+[
+  {
+    "replaceSummary": "个人喜好规则-小女子/我",
+    "enable": true,
+    "isRegex": false,
+    "regex": "小女子",
+    "replacement": "我",
+    "useTo": ""
+  },
+  {
+    "replaceSummary": "个人喜好规则-东国/和之国",
+    "enable": true,
+    "isRegex": false,
+    "regex": "东国",
+    "replacement": "和之国",
+    "useTo": ""
+  },
+  {
+    "replaceSummary": "个人喜好规则-冒险家/冒险者",
+    "enable": true,
+    "isRegex": false,
+    "regex": "冒险家",
+
+    "replacement": "冒险者",
+    "useTo": ""
+  },
+  {
+    "replaceSummary": "个人喜好规则-女帝/女王",
+    "enable": true,
+    "isRegex": false,
+    "regex": "女帝",
+    "replacement": "女王",
+    "useTo": ""
+  },
+  {
+    "replaceSummary": "去广告规则1",
+    "enable": true,
+    "isRegex": false,
+    "regex": "（笔趣谷无弹窗）提供高速文字无弹窗的小说，让你阅读更清爽，请记住我们的网址。",
+    "replacement": "",
+    "useTo": ""
+  },
+    {
+    "enable": true,
+    "isRegex": false,
+    "regex": "王**",
+    "replacement": "王国军"
+  }
+]
