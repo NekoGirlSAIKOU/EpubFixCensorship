@@ -19,7 +19,7 @@ def main():
         pass
 
     if sys.platform == 'win32':
-        subprocess.check_output(f'bash {PROGRAM_PATH}/UpdateUI.sh')
+        subprocess.check_output(f'bash "{PROGRAM_PATH}/UpdateUI.sh"')
     else:
         subprocess.check_output(f'{PROGRAM_PATH}/UpdateUI.sh')
 
