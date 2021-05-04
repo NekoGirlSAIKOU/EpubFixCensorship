@@ -94,7 +94,7 @@ class MainWindow(QMainWindow):
         if self.book is not None:
             self.ask_will_save()
 
-        file_name = QFileDialog.getOpenFileName(self, filter='Epub Book (*.epub)\nPlain Text (*.txt)')[0]
+        file_name = QFileDialog.getOpenFileName(self, filter='Epub Book (*.epub)')[0]
         if file_name != "":
             self.open_book(file_name)
 
