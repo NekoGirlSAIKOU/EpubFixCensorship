@@ -34,19 +34,19 @@ class MainWindow(QMainWindow):
         self.auto_replacements:List[Tuple[str,str]]=[]
 
         try :
-            with open (f'{PROGRAM_PATH}/rules.json') as f:
+            with open (f'{PROGRAM_PATH}/rules.json',encoding='utf8') as f:
                 self.rules:List[dict] = json.load(f)
         except FileNotFoundError:
             self.rules:List[dict] = []
 
         try :
-            with open (f'{PROGRAM_PATH}/replace_history.json') as f:
+            with open (f'{PROGRAM_PATH}/replace_history.json',encoding='utf8') as f:
                 self.replace_history:Dict[str,str] = json.load(f)
         except FileNotFoundError:
             self.replace_history:Dict[str,str]={}
 
         try :
-            with open (f'{PROGRAM_PATH}/config.json') as f:
+            with open (f'{PROGRAM_PATH}/config.json',encoding='utf8') as f:
                 self.config:dict = json.load(f)
         except FileNotFoundError:
             self.config:dict={}
@@ -83,10 +83,10 @@ class MainWindow(QMainWindow):
         if self.book is not None:
             self.ask_will_save()
 
-        with open (f'{PROGRAM_PATH}/rules.json','w') as f:
+        with open (f'{PROGRAM_PATH}/rules.json','w',encoding='utf8') as f:
             json.dump(self.rules,f,indent=4,ensure_ascii=False)
 
-        with open (f'{PROGRAM_PATH}/replace_history.json','w') as f:
+        with open (f'{PROGRAM_PATH}/replace_history.json','w',encoding='utf8') as f:
             json.dump(self.replace_history,f,indent=4,ensure_ascii=False)
 
         app.exit()

@@ -30,7 +30,7 @@ class SettingWindow(QMainWindow):
         self.config['element_strings'] = self.ui.lineEdit_element_strings.text().split(' ')
         self.config['check_element_by_rules'] = self.ui.checkBox_check_element_by_rules.isChecked()
 
-        with open ('config.json','w') as f:
+        with open ('config.json','w',encoding='utf8') as f:
             json.dump(self.config,f,indent=4,ensure_ascii=False)
 
     def button_ok_clicked(self):
