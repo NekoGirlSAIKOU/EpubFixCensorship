@@ -313,6 +313,8 @@ class MainWindow(QMainWindow):
         self.setting_window.show()
 
     def button_show_chapter_clicked(self):
+        if self.book is None:
+            return
         try :
             self.chapter_viewer_window.close()
         except:
