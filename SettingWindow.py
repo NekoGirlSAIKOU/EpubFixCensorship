@@ -90,7 +90,7 @@ class Ui_SettingWindow(object):
         SettingWindow.setWindowTitle(_translate("SettingWindow", "Setting"))
         self.label.setText(_translate("SettingWindow", "Check elements with these tags:"))
         self.label_2.setText(_translate("SettingWindow", "Check elements containing these strings:"))
-        self.checkBox_check_element_by_rules.setText(_translate("SettingWindow", "Check elements that can be processed by rules(Need much performance)"))
+        self.checkBox_check_element_by_rules.setText(_translate("SettingWindow", "Check elements that can be processed by rules(May decrease performance)"))
         self.button_ok.setText(_translate("SettingWindow", "OK"))
         self.button_cancel.setText(_translate("SettingWindow", "Cancel"))
         self.button_apply.setText(_translate("SettingWindow", "Apply"))

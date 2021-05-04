@@ -145,6 +145,19 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="show_chapter_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Show chapter</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QToolButton" name="next_button">
          <property name="text">
           <string>Next</string>

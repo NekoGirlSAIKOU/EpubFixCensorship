@@ -1,73 +1,101 @@
 [
     {
-        "replaceSummary": "个人喜好规则-小女子/我",
-        "enable": true,
+        "pattern": "**着双足",
+        "replacement": "赤裸着双足",
         "isRegex": false,
-        "regex": "小女子",
-        "replacement": "我",
-        "useTo": "",
-        "name": "个人喜好规则-小女子/我",
-        "pattern": "小女子",
+        "name": "**着双足 to 赤裸着双足",
         "isEnabled": true
     },
     {
-        "replaceSummary": "个人喜好规则-东国/和之国",
-        "enable": true,
+        "pattern": "将双腿**",
+        "replacement": "将双腿拔出",
         "isRegex": false,
-        "regex": "东国",
-        "replacement": "和之国",
-        "useTo": "",
-        "name": "个人喜好规则-东国/和之国",
-        "pattern": "东国",
+        "name": "将双腿** to 将双腿拔出",
+        "isEnabled": true,
+        "comment": "sfacg does not ban this word: 拔出."
+    },
+    {
+        "pattern": "男**隶",
+        "replacement": "男性奴隶",
+        "isRegex": false,
+        "name": "男**隶 to 男性奴隶",
         "isEnabled": true
     },
     {
-        "replaceSummary": "个人喜好规则-冒险家/冒险者",
-        "enable": true,
+        "pattern": "女**隶",
+        "replacement": "女性奴隶",
         "isRegex": false,
-        "regex": "冒险家",
-        "replacement": "冒险者",
-        "useTo": "",
-        "name": "个人喜好规则-冒险家/冒险者",
-        "pattern": "冒险家",
+        "name": "女**隶 to 女性奴隶",
         "isEnabled": true
     },
     {
-        "replaceSummary": "个人喜好规则-女帝/女王",
-        "enable": true,
+        "pattern": "年**孩",
+        "replacement": "年幼女孩",
         "isRegex": false,
-        "regex": "女帝",
-        "replacement": "女王",
-        "useTo": "",
-        "name": "个人喜好规则-女帝/女王",
-        "pattern": "女帝",
+        "name": "年**孩 to 年幼女孩",
         "isEnabled": true
     },
     {
-        "replaceSummary": "去广告规则1",
-        "enable": true,
+        "pattern": "萝莉与**",
+        "replacement": "萝莉与幼女",
         "isRegex": false,
-        "regex": "（笔趣谷无弹窗）提供高速文字无弹窗的小说，让你阅读更清爽，请记住我们的网址。",
-        "replacement": "",
-        "useTo": "",
-        "name": "去广告规则1",
-        "pattern": "（笔趣谷无弹窗）提供高速文字无弹窗的小说，让你阅读更清爽，请记住我们的网址。",
+        "name": "萝莉与** to 萝莉与幼女",
         "isEnabled": true
     },
     {
-        "enable": true,
+        "pattern": "年**性",
+        "replacement": "年幼女性",
         "isRegex": false,
-        "regex": "王**",
-        "replacement": "王国军",
-        "name": "王** to 王国军",
-        "pattern": "王**",
+        "name": "年**性 to 年幼女性",
         "isEnabled": true
     },
     {
-        "pattern": "更加**了",
-        "replacement": "更加兴奋了",
+        "pattern": "摸了**前",
+        "replacement": "摸了摸胸前",
         "isRegex": false,
-        "name": "更加**了 to 更加兴奋了",
+        "name": "摸了**前 to 摸了摸胸前",
+        "isEnabled": true
+    },
+    {
+        "pattern": "畅**",
+        "replacement": "畅快感",
+        "isRegex": false,
+        "name": "畅** to 畅快感",
+        "isEnabled": true
+    },
+    {
+        "pattern": "感**彩",
+        "replacement": "感情色彩",
+        "isRegex": false,
+        "name": "感**彩 to 感情色彩",
+        "isEnabled": true
+    },
+    {
+        "pattern": "对小女孩**",
+        "replacement": "对小女孩发情",
+        "isRegex": false,
+        "name": "对小女孩** to 对小女孩发情",
+        "isEnabled": true
+    },
+    {
+        "pattern": "**控",
+        "replacement": "被操控",
+        "isRegex": false,
+        "name": "**控 to 被操控",
+        "isEnabled": true
+    },
+    {
+        "pattern": "一次**给",
+        "replacement": "一次性交给",
+        "isRegex": false,
+        "name": "一次**给 to 一次性交给",
+        "isEnabled": true
+    },
+    {
+        "pattern": "不**",
+        "replacement": "不快感",
+        "isRegex": false,
+        "name": "不** to 不快感",
         "isEnabled": true
     }
 ]

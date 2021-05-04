@@ -10,6 +10,7 @@ from lxml import etree
 import os
 from MainWindow import *
 from setting import SettingWindow
+from chapter_viewer import ChapterViewerWindow
 from config import init_config,PROGRAM_PATH
 from autoreplace import AutoReplace
 
@@ -69,9 +70,14 @@ class MainWindow(QMainWindow):
         self.ui.next_button.clicked.connect(self.next_element)
         self.ui.last_button.clicked.connect(self.last_element)
         self.ui.add_new_rule.clicked.connect(self.button_add_new_rule_clicked)
+        self.ui.show_chapter_button.clicked.connect(self.button_show_chapter_clicked)
 
         self.ui.reapply_button.clicked.connect(self.button_reapply_clicked)
         self.ui.auto_fix_list.itemDoubleClicked.connect(self.listwidget_item_double_clicked)
+
+    @property
+    def current_element(self):
+        return self.chapter_elements[self.current_element_index]
 
     def closeEvent(self, QCloseEvent):
         if self.book is not None:
@@ -96,7 +102,12 @@ class MainWindow(QMainWindow):
     def open_book(self, file_name):
         self.file_name = file_name
         self.book = epub.read_epub(self.file_name)
-        self.book.set_unique_metadata(None, 'meta', '', {'name': 'EpubFixCensorship version', 'content': VERSION_NAME})
+
+        try :
+            self.book.set_unique_metadata(None, 'meta', '', {'name': 'EpubFixCensorship version', 'content': VERSION_NAME})
+        except AttributeError:
+            self.book.add_metadata(None, 'meta', '',
+                                          {'name': 'EpubFixCensorship version', 'content': VERSION_NAME})
 
         # clear last book ui
         self.ui.censored_text.clear()
@@ -298,6 +309,29 @@ class MainWindow(QMainWindow):
             pass
         self.setting_window = SettingWindow(config=self.config,parent=self)
         self.setting_window.show()
+
+    def button_show_chapter_clicked(self):
+        try :
+            self.chapter_viewer_window.close()
+        except:
+            pass
+
+        old_style = self.current_element.get('style',None)
+        if old_style is None:
+            self.current_element.set('style', 'color:red')
+        else :
+            self.current_element.set('style', f'{old_style};color:red')
+
+
+        content = etree.tounicode(self.current_chapter)
+        if old_style is None:
+            del self.current_element.attrib['style']
+        else :
+            self.current_element.set ('style',old_style)
+
+        self.chapter_viewer_window = ChapterViewerWindow(content=content,parent=self)
+        self.chapter_viewer_window.show()
+
 
 
 
