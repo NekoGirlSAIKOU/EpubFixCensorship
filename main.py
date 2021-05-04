@@ -129,6 +129,8 @@ class MainWindow(QMainWindow):
         self.next_chapter()
 
     def save_book_dialog_box(self):
+        if self.book is None:
+            return
         file_name = QFileDialog.getSaveFileName(self,filter='Epub Book (*.epub)')[0]
         if file_name != "":
             self.file_name = file_name
