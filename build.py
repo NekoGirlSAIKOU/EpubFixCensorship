@@ -5,7 +5,7 @@ import os
 import shutil
 import subprocess
 from config import PROGRAM_PATH
-
+import sys
 
 def main():
     try:
@@ -18,7 +18,10 @@ def main():
     except FileExistsError:
         pass
 
-    subprocess.check_output(f'{PROGRAM_PATH}/UpdateUI.sh')
+    if sys.platform == 'win32':
+        subprocess.check_output(f'bash {PROGRAM_PATH}/UpdateUI.sh')
+    else:
+        subprocess.check_output(f'{PROGRAM_PATH}/UpdateUI.sh')
 
     files = os.listdir(PROGRAM_PATH)
     for file in files:
