@@ -9,25 +9,25 @@ from config import PROGRAM_PATH
 
 def main():
     try:
-        shutil.rmtree('build')
+        shutil.rmtree(f'{PROGRAM_PATH}/build')
     except FileNotFoundError:
         pass
 
     try:
-        os.makedirs('build')
+        os.makedirs(f'{PROGRAM_PATH}/build')
     except FileExistsError:
         pass
 
     subprocess.check_output(f'{PROGRAM_PATH}/UpdateUI.sh')
 
-    files = os.listdir()
+    files = os.listdir(PROGRAM_PATH)
     for file in files:
         if (file[-3:] == '.py' and file != 'build.py') \
                 or file == 'LICENSE' \
                 or file == 'README.md' \
                 or file == 'requirements.txt'\
                 or file == 'rules.json':
-            shutil.copy(file, 'build/')
+            shutil.copy(f'{PROGRAM_PATH}/{file}', f'{PROGRAM_PATH}/build/')
 
     version_name = subprocess.check_output(['git', 'describe']).decode('ascii').strip()
     version = subprocess.check_output(['git', 'describe', '--abbrev=0']).decode('ascii').strip()
@@ -37,10 +37,10 @@ def main():
         'version_name': version_name,
     }
     print('version_name:', build_info['version_name'])
-    with open('build/build_info.json', 'w') as f:
+    with open(f'{PROGRAM_PATH}/build/build_info.json', 'w') as f:
         json.dump(build_info, f,indent=4)
 
-    with open ('build/version.py','w') as f:
+    with open (f'{PROGRAM_PATH}/build/version.py','w') as f:
         f.write(f'VERSION = {version}\n')
         f.write(f'VERSION_NAME = {version_name}\n')
 
