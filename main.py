@@ -11,10 +11,9 @@ import os
 from MainWindow import *
 from setting import SettingWindow
 from chapter_viewer import ChapterViewerWindow
-from config import init_config,PROGRAM_PATH
+from config import init_config, PROGRAM_PATH
 from autoreplace import AutoReplace
-from version import VERSION,VERSION_NAME
-
+from version import VERSION, VERSION_NAME
 
 app: QApplication = None
 
@@ -31,28 +30,28 @@ class MainWindow(QMainWindow):
         self.chapter_elements: List[etree._Element] = []
         self.current_element_index = 0
 
-        self.auto_replacements:List[Tuple[str,str]]=[]
+        self.auto_replacements: List[Tuple[str, str]] = []
 
-        try :
-            with open (f'{PROGRAM_PATH}/rules.json',encoding='utf8') as f:
-                self.rules:List[dict] = json.load(f)
+        try:
+            with open(f'{PROGRAM_PATH}/rules.json', encoding='utf8') as f:
+                self.rules: List[dict] = json.load(f)
         except FileNotFoundError:
-            self.rules:List[dict] = []
+            self.rules: List[dict] = []
 
-        try :
-            with open (f'{PROGRAM_PATH}/replace_history.json',encoding='utf8') as f:
-                self.replace_history:Dict[str,str] = json.load(f)
+        try:
+            with open(f'{PROGRAM_PATH}/replace_history.json', encoding='utf8') as f:
+                self.replace_history: Dict[str, str] = json.load(f)
         except FileNotFoundError:
-            self.replace_history:Dict[str,str]={}
+            self.replace_history: Dict[str, str] = {}
 
-        try :
-            with open (f'{PROGRAM_PATH}/config.json',encoding='utf8') as f:
-                self.config:dict = json.load(f)
+        try:
+            with open(f'{PROGRAM_PATH}/config.json', encoding='utf8') as f:
+                self.config: dict = json.load(f)
         except FileNotFoundError:
-            self.config:dict={}
+            self.config: dict = {}
         init_config(self.config)
 
-        self.replacer = AutoReplace(rules=self.rules,replace_histories=self.replace_history)
+        self.replacer = AutoReplace(rules=self.rules, replace_histories=self.replace_history)
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -83,11 +82,11 @@ class MainWindow(QMainWindow):
         if self.book is not None:
             self.ask_will_save()
 
-        with open (f'{PROGRAM_PATH}/rules.json','w',encoding='utf8') as f:
-            json.dump(self.rules,f,indent=4,ensure_ascii=False)
+        with open(f'{PROGRAM_PATH}/rules.json', 'w', encoding='utf8') as f:
+            json.dump(self.rules, f, indent=4, ensure_ascii=False)
 
-        with open (f'{PROGRAM_PATH}/replace_history.json','w',encoding='utf8') as f:
-            json.dump(self.replace_history,f,indent=4,ensure_ascii=False)
+        with open(f'{PROGRAM_PATH}/replace_history.json', 'w', encoding='utf8') as f:
+            json.dump(self.replace_history, f, indent=4, ensure_ascii=False)
 
         app.exit()
 
@@ -95,7 +94,7 @@ class MainWindow(QMainWindow):
         if self.book is not None:
             self.ask_will_save()
 
-        file_name = QFileDialog.getOpenFileName(self,filter='Epub Book (*.epub)\nPlain Text (*.txt)')[0]
+        file_name = QFileDialog.getOpenFileName(self, filter='Epub Book (*.epub)\nPlain Text (*.txt)')[0]
         if file_name != "":
             self.open_book(file_name)
 
@@ -103,11 +102,12 @@ class MainWindow(QMainWindow):
         self.file_name = file_name
         self.book = epub.read_epub(self.file_name)
 
-        try :
-            self.book.set_unique_metadata(None, 'meta', '', {'name': 'EpubFixCensorship version', 'content': VERSION_NAME})
+        try:
+            self.book.set_unique_metadata(None, 'meta', '',
+                                          {'name': 'EpubFixCensorship version', 'content': VERSION_NAME})
         except AttributeError:
             self.book.add_metadata(None, 'meta', '',
-                                          {'name': 'EpubFixCensorship version', 'content': VERSION_NAME})
+                                   {'name': 'EpubFixCensorship version', 'content': VERSION_NAME})
 
         # clear last book ui
         self.ui.censored_text.clear()
@@ -131,7 +131,7 @@ class MainWindow(QMainWindow):
     def save_book_dialog_box(self):
         if self.book is None:
             return
-        file_name = QFileDialog.getSaveFileName(self,filter='Epub Book (*.epub)')[0]
+        file_name = QFileDialog.getSaveFileName(self, filter='Epub Book (*.epub)')[0]
         if file_name != "":
             self.file_name = file_name
             self.save_book()
@@ -144,7 +144,6 @@ class MainWindow(QMainWindow):
             if self.file_name is None:
                 return
             file_name = self.file_name
-
 
         # Make sure current edit is saved.
         self.save_current_element()
@@ -187,10 +186,10 @@ class MainWindow(QMainWindow):
             self.show_element()
 
     def save_current_element(self):
-        try :
+        try:
             current_element = self.chapter_elements[self.current_element_index]
             if current_element.get('censored_text') is None:
-                current_element.set('censored_text',current_element.text)
+                current_element.set('censored_text', current_element.text)
             current_element.text = self.ui.fixed_text.toPlainText()
 
             if current_element.text != current_element.get('censored_text'):
@@ -198,26 +197,26 @@ class MainWindow(QMainWindow):
         except IndexError:
             pass
 
-    def show_element(self,original_text = None):
-        try :
+    def show_element(self, original_text=None):
+        try:
             current_element = self.chapter_elements[self.current_element_index]
         except:
             return
         if original_text is None:
-            original_text = current_element.get("censored_text",current_element.text)
+            original_text = current_element.get("censored_text", current_element.text)
 
         self.ui.auto_fix_list.clear()
         self.ui.censored_text.setPlainText(original_text)
 
         self.auto_replacements = self.replacer.replace_text(original_text)
-        try :
+        try:
             # index 0 is origin result
             self.ui.fixed_text.setPlainText(self.auto_replacements[1][1])
         except IndexError:
             self.ui.fixed_text.setPlainText(current_element.text)
         for replacement in self.auto_replacements:
             self.ui.auto_fix_list.addItem(replacement[0])
-        try :
+        try:
             self.ui.chapter_title.setText(self.current_chapter.xpath('/html/head/title//text()')[0])
         except IndexError:
             self.ui.chapter_title.setText('')
@@ -232,10 +231,11 @@ class MainWindow(QMainWindow):
             self.current_chapter_index -= 1
             self.current_chapter: etree._Element = etree.HTML(
                 self.chapters[self.current_chapter_index].content)
-            self.chapter_elements = self.filter_element(self.current_chapter.cssselect(','.join(self.config['element_tags'])))
+            self.chapter_elements = self.filter_element(
+                self.current_chapter.cssselect(','.join(self.config['element_tags'])))
             if self.chapter_elements == []:
                 return self.last_chapter()
-            self.current_element_index = len(self.chapter_elements)-1
+            self.current_element_index = len(self.chapter_elements) - 1
 
             self.show_element()
 
@@ -250,15 +250,16 @@ class MainWindow(QMainWindow):
             self.current_chapter_index += 1
             self.current_chapter: etree._Element = etree.HTML(
                 self.chapters[self.current_chapter_index].content)
-            self.chapter_elements = self.filter_element(self.current_chapter.cssselect(','.join(self.config['element_tags'])))
+            self.chapter_elements = self.filter_element(
+                self.current_chapter.cssselect(','.join(self.config['element_tags'])))
             if self.chapter_elements == []:
                 return self.next_chapter()
             self.current_element_index = 0
 
             self.show_element()
 
-    def filter_element(self,elements:List[etree._Element])->List[etree._Element]:
-        r:List[etree._Element] = []
+    def filter_element(self, elements: List[etree._Element]) -> List[etree._Element]:
+        r: List[etree._Element] = []
         checked_string = self.config['element_strings']
         for element in elements:
             if element.text is None:
@@ -269,7 +270,7 @@ class MainWindow(QMainWindow):
                 continue
 
             for char in self.config['element_strings']:
-                if char in element.get('censored_text',element.text):
+                if char in element.get('censored_text', element.text):
                     r.append(element)
                     continue
 
@@ -291,52 +292,49 @@ class MainWindow(QMainWindow):
 
     def button_add_new_rule_clicked(self):
         rule = {
-            'pattern':self.ui.new_rule_pattern.text(),
-            'replacement':self.ui.new_rule_replacement.text(),
-            'isRegex':self.ui.is_regex_rule.isChecked()
+            'pattern': self.ui.new_rule_pattern.text(),
+            'replacement': self.ui.new_rule_replacement.text(),
+            'isRegex': self.ui.is_regex_rule.isChecked()
         }
         rule['name'] = f'{rule["pattern"]} to {rule["replacement"]}'
         self.ui.new_rule_pattern.setText('')
         self.ui.new_rule_replacement.setText('')
         self.rules.append(rule)
 
-    def listwidget_item_double_clicked(self,item:QListWidgetItem):
+    def listwidget_item_double_clicked(self, item: QListWidgetItem):
         index = self.ui.auto_fix_list.indexFromItem(item)
         self.ui.fixed_text.setPlainText(self.auto_replacements[index.row()][1])
 
     def show_setting_window(self):
-        try :
+        try:
             self.setting_window.close()
         except:
             pass
-        self.setting_window = SettingWindow(config=self.config,parent=self)
+        self.setting_window = SettingWindow(config=self.config, parent=self)
         self.setting_window.show()
 
     def button_show_chapter_clicked(self):
         if self.book is None:
             return
-        try :
+        try:
             self.chapter_viewer_window.close()
         except:
             pass
 
-        old_style = self.current_element.get('style',None)
+        old_style = self.current_element.get('style', None)
         if old_style is None:
             self.current_element.set('style', 'color:red')
-        else :
+        else:
             self.current_element.set('style', f'{old_style};color:red')
-
 
         content = etree.tounicode(self.current_chapter)
         if old_style is None:
             del self.current_element.attrib['style']
-        else :
-            self.current_element.set ('style',old_style)
+        else:
+            self.current_element.set('style', old_style)
 
-        self.chapter_viewer_window = ChapterViewerWindow(content=content,parent=self)
+        self.chapter_viewer_window = ChapterViewerWindow(content=content, parent=self)
         self.chapter_viewer_window.show()
-
-
 
 
 def main() -> int:
@@ -344,6 +342,8 @@ def main() -> int:
     app = QApplication(sys.argv)
     main_window = MainWindow()
     main_window.show()
+    if len(sys.argv) > 1:
+        main_window.open_book(file_name=sys.argv[1])
     return app.exec_()
 
 
