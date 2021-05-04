@@ -1,6 +1,8 @@
 *.epub
 venv
 MainWindow.py
+SettingWindow.py
+ChapterViewerWindow.py
 config.json
 __pycache__
 replace_history.json
