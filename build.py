@@ -31,7 +31,7 @@ def main():
 
     version_name = subprocess.check_output(['git', 'describe']).decode('ascii').strip()
     version = subprocess.check_output(['git', 'describe', '--abbrev=0']).decode('ascii').strip()
-    version = list(int(i) for i in version.replace('v','').split('.'))
+    version = tuple(int(i) for i in version.replace('v','').split('.'))
     build_info = {
         'version': version,
         'version_name': version_name,
@@ -42,7 +42,7 @@ def main():
 
     with open (f'{PROGRAM_PATH}/build/version.py','w') as f:
         f.write(f'VERSION = {version}\n')
-        f.write(f'VERSION_NAME = {version_name}\n')
+        f.write(f'VERSION_NAME = "{version_name}"\n')
 
 
 if __name__ == '__main__':
