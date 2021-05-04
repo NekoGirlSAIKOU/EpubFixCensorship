@@ -13,9 +13,9 @@ from setting import SettingWindow
 from chapter_viewer import ChapterViewerWindow
 from config import init_config,PROGRAM_PATH
 from autoreplace import AutoReplace
+from version import VERSION,VERSION_NAME
 
-VERSION = (0, 1, 0)
-VERSION_NAME = '.'.join(str(i) for i in VERSION)
+
 app: QApplication = None
 
 
