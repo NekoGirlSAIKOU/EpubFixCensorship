@@ -4,7 +4,7 @@ import json
 import os
 import shutil
 import subprocess
-import sys
+from config import PROGRAM_PATH
 
 
 def main():
@@ -17,6 +17,8 @@ def main():
         os.makedirs('build')
     except FileExistsError:
         pass
+
+    subprocess.check_output(f'{PROGRAM_PATH}/UpdateUI.sh')
 
     files = os.listdir()
     for file in files:
