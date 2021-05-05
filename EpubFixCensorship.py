@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import sys
 from typing import List
 from ebooklib import epub
 from lxml import etree
@@ -32,3 +33,11 @@ def filter_element(config:dict, replacer:AutoReplace,elements: List[etree._Eleme
                 continue
 
     return r
+
+def main():
+    print("Unavilable for now.")
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
