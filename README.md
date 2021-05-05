@@ -12,3 +12,20 @@
 ### 计划中的特性
 - 命令行版本以方便批量处理
 - 云端规则库
+
+
+### 截图
+![主界面](screenshots/1.png)
+
+
+### 依赖模块
+- PyQt5
+- cssselect
+- lxml
+- ebooklib
+- regex (可选，如果没有的话会调用python内置的re模块)
+
+### 构建
+使用`build.sh`会产生一个`build`文件夹将所有需要的文件复制过去，并自动从git获取版本号直接写入到`build`中的`version.py`供程序读取。未经过这个处理的话`version.py`原本的代码是自动从git中获取版本号。  
+使用`build_windows.bat`会产生一个`build_windows`文件夹并将使用pyinstaller打包好的exe放进去。  
+这两个脚本都会顺便将README.md、LICENSE放进对应的build文件夹中，顺便还会将rules.json也放进去，虽然没有这个文件也行，不过这里顺便提供了我自用的规则文件，以后这个文件应该还会更新变得越来越完善。  
