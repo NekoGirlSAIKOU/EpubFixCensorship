@@ -151,6 +151,9 @@ class MainWindow(QMainWindow):
 
         epub.write_epub(file_name, self.book)
 
+        # Reset window title
+        self.setWindowTitle(f'EpubFixCensorship - {os.path.basename(self.file_name)}')
+
     def show_about_window(self):
         QMessageBox.about(self, "About:", f"EpubFixCensorship\nVersion:{VERSION_NAME}")
 
