@@ -9,3 +9,4 @@ replace_history.json
 build
 temp
 build_windows
+upx.exe
