@@ -14,7 +14,8 @@ from chapter_viewer import ChapterViewerWindow
 from config import init_config, PROGRAM_PATH
 from autoreplace import AutoReplace
 from version import VERSION, VERSION_NAME
-from EpubFixCensorship import set_book_version_metadata,filter_element
+from EpubFixCensorship import set_book_version_metadata, filter_element
+from trans import change_language
 
 app: QApplication = None
 
@@ -57,6 +58,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # connect signals
         self.ui.actionOpen.triggered.connect(self.open_book_dialog_box)
         self.ui.actionSave.triggered.connect(self.save_book)
         self.ui.actionSave_as.triggered.connect(self.save_book_dialog_box)
@@ -258,7 +260,7 @@ class MainWindow(QMainWindow):
             self.show_element()
 
     def filter_element(self, elements: List[etree._Element]) -> List[etree._Element]:
-        return filter_element(config=self.config,replacer=self.replacer,elements=elements)
+        return filter_element(config=self.config, replacer=self.replacer, elements=elements)
 
     def save_current_chapter(self):
         if self.current_chapter is not None:
@@ -319,6 +321,11 @@ def main() -> int:
     global app
     app = QApplication(sys.argv)
     main_window = MainWindow()
+
+    # Load translation
+    change_language(f'{PROGRAM_PATH}/languages/{main_window.config["language"]}.qm')
+    main_window.ui.retranslateUi(main_window)
+
     main_window.show()
     if len(sys.argv) > 1:
         main_window.open_book(file_name=sys.argv[1])
