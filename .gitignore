@@ -10,3 +10,4 @@ build
 temp
 build_windows
 upx.exe
+*.spec
