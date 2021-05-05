@@ -14,6 +14,7 @@ from chapter_viewer import ChapterViewerWindow
 from config import init_config, PROGRAM_PATH
 from autoreplace import AutoReplace
 from version import VERSION, VERSION_NAME
+from EpubFixCensorship import set_book_version_metadata
 
 app: QApplication = None
 
@@ -102,12 +103,7 @@ class MainWindow(QMainWindow):
         self.file_name = file_name
         self.book = epub.read_epub(self.file_name)
 
-        try:
-            self.book.set_unique_metadata(None, 'meta', '',
-                                          {'name': 'EpubFixCensorship version', 'content': VERSION_NAME})
-        except AttributeError:
-            self.book.add_metadata(None, 'meta', '',
-                                   {'name': 'EpubFixCensorship version', 'content': VERSION_NAME})
+        set_book_version_metadata(self.book)
 
         # clear last book ui
         self.ui.censored_text.clear()
