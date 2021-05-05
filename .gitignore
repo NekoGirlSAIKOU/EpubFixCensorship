@@ -8,3 +8,4 @@ __pycache__
 replace_history.json
 build
 temp
+build_windows
