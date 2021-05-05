@@ -21,7 +21,7 @@ app: QApplication = None
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self,config:dict):
         super().__init__()
 
         self.book: Optional[epub.EpubBook] = None
@@ -46,12 +46,7 @@ class MainWindow(QMainWindow):
         except FileNotFoundError:
             self.replace_history: Dict[str, str] = {}
 
-        try:
-            with open(f'{PROGRAM_PATH}/config.json', encoding='utf8') as f:
-                self.config: dict = json.load(f)
-        except FileNotFoundError:
-            self.config: dict = {}
-        init_config(self.config)
+        self.config = config
 
         self.replacer = AutoReplace(rules=self.rules, replace_histories=self.replace_history)
 
@@ -320,7 +315,15 @@ class MainWindow(QMainWindow):
 def main() -> int:
     global app
     app = QApplication(sys.argv)
-    main_window = MainWindow()
+
+    try:
+        with open(f'{PROGRAM_PATH}/config.json', encoding='utf8') as f:
+            config: dict = json.load(f)
+    except FileNotFoundError:
+        config: dict = {}
+    init_config(config)
+
+    main_window = MainWindow(config)
 
     # Load translation
     change_language(f'{PROGRAM_PATH}/languages/{main_window.config["language"]}.qm')
