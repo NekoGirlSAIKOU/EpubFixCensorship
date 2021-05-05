@@ -17,7 +17,7 @@ cp requirements.txt build/
 cp -r languages/*.qm build/languages/
 
 echo execute generate_version.py
-./generate_version.py build/version.py
+python generate_version.py build/version.py
 
 echo Build finished.
 
