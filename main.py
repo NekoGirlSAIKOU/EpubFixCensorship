@@ -14,7 +14,7 @@ from chapter_viewer import ChapterViewerWindow
 from config import init_config, PROGRAM_PATH
 from autoreplace import AutoReplace
 from version import VERSION, VERSION_NAME
-from EpubFixCensorship import set_book_version_metadata
+from EpubFixCensorship import set_book_version_metadata,filter_element
 
 app: QApplication = None
 
@@ -258,28 +258,7 @@ class MainWindow(QMainWindow):
             self.show_element()
 
     def filter_element(self, elements: List[etree._Element]) -> List[etree._Element]:
-        r: List[etree._Element] = []
-        checked_string = self.config['element_strings']
-        for element in elements:
-            if element.text is None:
-                continue
-
-            if element.get('censored_text') is not None:
-                r.append(element)
-                continue
-
-            for char in self.config['element_strings']:
-                if char in element.get('censored_text', element.text):
-                    r.append(element)
-                    continue
-
-            if self.config['check_element_by_rules']:
-                replaced_texts = self.replacer.replace_text(element.text)
-                if len(replaced_texts) > 1:
-                    r.append(element)
-                    continue
-
-        return r
+        return filter_element(config=self.config,replacer=self.replacer,elements=elements)
 
     def save_current_chapter(self):
         if self.current_chapter is not None:
