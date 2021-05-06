@@ -144,8 +144,11 @@ class MainWindow(QMainWindow):
         self.save_current_chapter()
 
         for chater in self.chapters:
-            if chater.title == '':
-                chater.title = etree.HTML(chater.content).xpath('/html/head/title//text()')[0]
+            try :
+                if chater.title == '':
+                    chater.title = etree.HTML(chater.content).xpath('/html/head/title//text()')[0]
+            except IndexError:
+                pass
 
         epub.write_epub(file_name, self.book)
 
