@@ -33,7 +33,6 @@ class AutoReplace:
 
             if replace_rule.get('isRegex', False):
                 try:
-                    r = re.findall(replace_rule['pattern'], text)
                     new_text = re.sub(replace_rule['pattern'], replace_rule['replacement'], text, count=0, flags=0)
                     if new_text != text:
                         r.append((replace_rule['name'], new_text))
