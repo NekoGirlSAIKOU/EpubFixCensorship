@@ -97,5 +97,19 @@
         "isRegex": false,
         "name": "不** to 不快感",
         "isEnabled": true
+    },
+    {
+        "pattern": "突**况",
+        "replacement": "突发情况",
+        "isRegex": false,
+        "name": "突**况 to 突发情况",
+        "isEnabled": true
+    },
+    {
+        "pattern": "任人**",
+        "replacement": "任人宰割",
+        "isRegex": false,
+        "name": "任人** to 任人宰割",
+        "isEnabled": true
     }
 ]
