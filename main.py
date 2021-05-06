@@ -143,6 +143,10 @@ class MainWindow(QMainWindow):
         self.save_current_element()
         self.save_current_chapter()
 
+        for chater in self.chapters:
+            if chater.title == '':
+                chater.title = etree.HTML(chater.content).xpath('/html/head/title//text()')[0]
+
         epub.write_epub(file_name, self.book)
 
         # Reset window title
