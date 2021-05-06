@@ -218,42 +218,51 @@ class MainWindow(QMainWindow):
         except IndexError:
             self.ui.chapter_title.setText('')
 
-    def last_chapter(self):
-        self.save_current_chapter()
-        if self.current_chapter_index <= 0:
+    def last_chapter(self,current_chapter_index = None):
+        if current_chapter_index is None:
+            current_chapter_index = self.current_chapter_index
+        if current_chapter_index <= 0:
             # There is no more chapter
             QMessageBox.information(self,self.tr("Information:") ,self.tr("This is the first chapter"))
             return
         else:
-            self.current_chapter_index -= 1
-            self.current_chapter: etree._Element = etree.HTML(
-                self.chapters[self.current_chapter_index].content)
-            self.chapter_elements = self.filter_element(
-                self.current_chapter.cssselect(','.join(self.config['element_tags'])))
-            if self.chapter_elements == []:
-                return self.last_chapter()
-            self.current_element_index = len(self.chapter_elements) - 1
+            current_chapter_index -= 1
+            current_chapter: etree._Element = etree.HTML(
+                self.chapters[current_chapter_index].content)
+            chapter_elements = self.filter_element(
+                current_chapter.cssselect(','.join(self.config['element_tags'])))
+            if chapter_elements == []:
+                return self.last_chapter(current_chapter_index = current_chapter_index)
+            else :
+                self.save_current_chapter()
+                self.current_chapter = current_chapter
+                self.chapter_elements = chapter_elements
+                self.current_chapter_index = current_chapter_index
+                self.current_element_index = len(self.chapter_elements) - 1
+                self.show_element()
 
-            self.show_element()
-
-    def next_chapter(self):
-        self.save_current_chapter()
-
-        if self.current_chapter_index >= len(self.chapters) - 1:
+    def next_chapter(self,current_chapter_index = None):
+        if current_chapter_index is None:
+            current_chapter_index = self.current_chapter_index
+        if current_chapter_index >= len(self.chapters) - 1:
             # There is no more chapter
             QMessageBox.information(self, self.tr("Information:"), self.tr("There is no more chapter"))
             return
         else:
-            self.current_chapter_index += 1
-            self.current_chapter: etree._Element = etree.HTML(
-                self.chapters[self.current_chapter_index].content)
-            self.chapter_elements = self.filter_element(
-                self.current_chapter.cssselect(','.join(self.config['element_tags'])))
-            if self.chapter_elements == []:
-                return self.next_chapter()
-            self.current_element_index = 0
-
-            self.show_element()
+            current_chapter_index += 1
+            current_chapter: etree._Element = etree.HTML(
+                self.chapters[current_chapter_index].content)
+            chapter_elements = self.filter_element(
+                current_chapter.cssselect(','.join(self.config['element_tags'])))
+            if chapter_elements == []:
+                return self.next_chapter(current_chapter_index = current_chapter_index)
+            else :
+                self.save_current_chapter()
+                self.current_chapter = current_chapter
+                self.chapter_elements = chapter_elements
+                self.current_chapter_index = current_chapter_index
+                self.current_element_index = 0
+                self.show_element()
 
     def filter_element(self, elements: List[etree._Element]) -> List[etree._Element]:
         return filter_element(config=self.config, replacer=self.replacer, elements=elements)
