@@ -156,7 +156,7 @@ class MainWindow(QMainWindow):
 
     def ask_will_save(self):
         # Ask the user if he want to save the epub.
-        r = QMessageBox.question(self, "Do you want to save", "Do you want to save current book?")
+        r = QMessageBox.question(self,self.tr("Question:"),self.tr("Do you want to save current book?"))
         if r == QMessageBox.StandardButton.Yes:
             self.save_book()
 
@@ -222,7 +222,7 @@ class MainWindow(QMainWindow):
         self.save_current_chapter()
         if self.current_chapter_index <= 0:
             # There is no more chapter
-            QMessageBox.information(self, "Information", "This is the last chapter")
+            QMessageBox.information(self,self.tr("Information:") ,self.tr("This is the first chapter"))
             return
         else:
             self.current_chapter_index -= 1
@@ -241,7 +241,7 @@ class MainWindow(QMainWindow):
 
         if self.current_chapter_index >= len(self.chapters) - 1:
             # There is no more chapter
-            QMessageBox.information(self, "Information", "There is no more chapter")
+            QMessageBox.information(self, self.tr("Information:"), self.tr("There is no more chapter"))
             return
         else:
             self.current_chapter_index += 1

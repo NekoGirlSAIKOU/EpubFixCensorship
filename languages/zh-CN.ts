@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="en">
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN" sourcelanguage="en">
 <context>
     <name>ChapterViewerWindow</name>
     <message>
@@ -114,6 +115,36 @@
         <location filename="../MainWindow.py" line="169"/>
         <source>About Qt</source>
         <translation>关于Qt</translation>
+    </message>
+    <message>
+        <location filename="../main.py" line="159"/>
+        <source>Do you want to save current book?</source>
+        <translation>你要保存当前电子书吗?</translation>
+    </message>
+    <message>
+        <location filename="../main.py" line="244"/>
+        <source>There is no more chapter</source>
+        <translation>没有更多章节了</translation>
+    </message>
+    <message>
+        <location filename="../main.py" line="159"/>
+        <source>Question</source>
+        <translation type="obsolete">问题</translation>
+    </message>
+    <message>
+        <location filename="../main.py" line="244"/>
+        <source>Information:</source>
+        <translation>信息:</translation>
+    </message>
+    <message>
+        <location filename="../main.py" line="225"/>
+        <source>This is the first chapter</source>
+        <translation>这是第一个章节</translation>
+    </message>
+    <message>
+        <location filename="../main.py" line="159"/>
+        <source>Question:</source>
+        <translation>问题:</translation>
     </message>
 </context>
 <context>
