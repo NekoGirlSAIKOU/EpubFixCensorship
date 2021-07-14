@@ -166,6 +166,8 @@ class MainWindow(QMainWindow):
             return
         file_name = QFileDialog.getSaveFileName(self, filter='Epub Book (*.epub)')[0]
         if file_name != "":
+            if not file_name.endswith('.epub'):
+                file_name = file_name+'.epub'
             self.file_name = file_name
             self.save_book()
 
