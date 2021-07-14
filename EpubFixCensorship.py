@@ -4,6 +4,8 @@ import sys
 from typing import List
 from ebooklib import epub, ITEM_DOCUMENT
 from lxml import etree
+
+from EpubCensorshipFixer import EpubCensorshipFixer
 from version import VERSION, VERSION_NAME
 from config import init_config, PROGRAM_PATH
 from autoreplace import AutoReplace
@@ -82,37 +84,30 @@ def main():
     # Load book
     book = epub.read_epub(args.book)
     set_book_version_metadata(book)
-    chapters: List[epub.EpubHtml] = list(book.get_items_of_type(ITEM_DOCUMENT))
+    print("Load fixer")
+    fixer = EpubCensorshipFixer(book,replacer,
+                                element_tags=config['element_tags'],
+                                element_strings=config['element_strings'],
+                                check_element_by_rules=config['check_element_by_rules'])
 
-    # Process chapter
-    for chapter in chapters:
-        chapter_element: etree._Element = etree.HTML(chapter.content)
+    print("Process chapter")
+    for element in fixer.censored_element:
+        origin_text = element.get("censored_text",element.text)
+        print(f"Fix {origin_text}")
         try:
-            if chapter.title == '':
-                chapter.title = chapter_element.xpath('/html/head/title//text()')[0]
+            r = replacer.replace_text(origin_text)[1]
         except IndexError:
-            pass
+            print("Found a text that cant be fixed:")
+            print(origin_text)
+        else:
+            print(f"Apply rule: {r[0]}")
+            if element.get('censored_text', None) is None:
+                element.set('censored_text', origin_text)
+            element.text = r[1]
+            print(f"Fix to {r[1]}")
 
-        print(f"Process {chapter.title}")
-
-        chapter_text_elements: List[etree._Element] = filter_element(config=config, replacer=replacer,
-                                                                     elements=chapter_element.cssselect(
-                                                                         ','.join(config['element_tags']))
-                                                                     )
-
-        for element in chapter_text_elements:
-            try:
-                r = replacer.replace_text(element.text)[1]
-            except IndexError:
-                print("Found a text that cant be fixed:")
-                print(element.text)
-            else:
-                print(f"Apply rule: {r[0]}")
-                if element.get('censored_text',None) is None:
-                    element.set('censored_text', element.text)
-                element.text = r[1]
-        chapter.content = etree.tounicode(chapter_element)
-
+    print("Regenerate chapter item")
+    fixer.regenerate_epub_item()
 
     print("Save epub")
     if args.output is None:
