@@ -111,5 +111,12 @@
         "isRegex": false,
         "name": "任人** to 任人宰割",
         "isEnabled": true
+    },
+    {
+        "pattern": "更加**了",
+        "replacement": "更加兴奋了",
+        "isRegex": false,
+        "name": "更加**了 to 更加兴奋了",
+        "isEnabled": true
     }
 ]

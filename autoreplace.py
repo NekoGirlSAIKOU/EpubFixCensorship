@@ -9,9 +9,9 @@ except ImportError:
 
 
 class AutoReplace:
-    def __init__(self, *, rules: List[dict] = [], replace_histories:Dict[str,str] = {}):
-        self.rules = rules
-        self.replace_histories = replace_histories
+    def __init__(self, *, rules: List[dict] = ..., replace_histories:Dict[str,str] = ...):
+        self.rules = [] if rules is ... else rules
+        self.replace_histories = {} if replace_histories is ... else replace_histories
 
     def replace_text(self, text) -> List[Tuple[str, str]]:
         r = [('origin', text)]
